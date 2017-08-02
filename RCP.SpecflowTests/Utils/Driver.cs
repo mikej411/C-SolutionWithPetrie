@@ -20,19 +20,12 @@ namespace RCP.SpecflowTests.Utils
         {
             string location = Assembly.GetExecutingAssembly().Location;
             string driverPath = Path.Combine(Path.GetDirectoryName(location), "drivers");
-#if DEBUG
+
             // This is run from Visual Studio with a DEBUG build.
             ChromeOptions chromeOptions = new ChromeOptions();
-            //chromeOptions.BinaryLocation = @"C:\Users\e0056276\AppData\Local\Google\Chrome SxS\Application\chrome.exe";
-            //chromeOptions.AddArguments("--headless");
             chromeOptions.AddArguments("--start-maximized");
             Instance = new ChromeDriver(driverPath, chromeOptions);
-#else
-            // This is intended for Team City to run      
-            Instance = new PhantomJSDriver(driverPath);
-            Instance.Manage().Window.Maximize();
-#endif
-            Console.WriteLine($" *** Web Driver in use is {Instance.GetType().FullName}");
+
             TurnOnWait();
         }
 
